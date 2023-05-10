@@ -14,18 +14,24 @@ class ProductController extends Controller
 {
     public function index() 
     {
-        $products = Product::with(['orderItems', 'orderItems.order'])->orderBy('name', 'ASC')->get();
+        $products = Product::with([
+            'orderItems', 
+            'orderItems.order',
+            'orderItems.order.customer',
+        ])->orderBy('name', 'ASC')->get();
 
         return (new ProductCollection($products))
-                ->additional(['success' => true, 'message' => ''])
+                ->additional(['success' => true])
                 ->response()
                 ->setStatusCode(Response::HTTP_OK);
     }
 
     public function show(Product $product) 
     {
+        $product->load(['orderItems', 'orderItems.order', 'orderItems.order.customer']);
+
         return (new ProductResource($product))
-                ->additional(['success' => true, 'message' => 'Movie is created.'])
+                ->additional(['success' => true])
                 ->response()
                 ->setStatusCode(Response::HTTP_OK);
     }
