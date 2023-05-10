@@ -25,4 +25,14 @@ class Product extends Model
     {
         return $this->hasMany(Orderitem::class);   
     }
+
+    /**
+     * @param int $quanitiy
+     */
+    public function calculateTotalPrice(int $quanitiy = 0) 
+    {
+        $totalPrice = $this->price * $quanitiy;
+
+        return $totalPrice;
+    }
 }
