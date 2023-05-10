@@ -14,8 +14,8 @@ Your task is to implement the following endpoints for the API:
 - `POST /orders`: creates a new order. The request body should contain the customer information, shipping address, and a list of order items. The response should include the newly created order ID.
 - `PUT /orders/{id}`: updates an existing order. The request body should contain the updated customer information, shipping address, and/or payment status.
 - `DELETE /orders/{id}`: deletes an existing order.
-- 'GET /dashboard': returns a total sales amount, top-selling products, and best customer (who purchased most) in the specific period with options to change the range of dates
-- 'GET /search/{query}': returns search results grouped by product, orders, or customers for a search query
+- `GET /dashboard`: returns a total sales amount, top-selling products, and best customer (who purchased most) in the specific period with options to change the range of dates
+- `GET /search/{query}`: returns search results grouped by product, orders, or customers for a search query
 It would be best if you implemented the API using the latest Laravel, PHP 8 or higher, and MySQL 8. You are welcome to use any other libraries or packages as you need them.
 
 Your code should be well-structured, clean, and easy to maintain. You should follow the PSR-12 coding style guide and write clear and concise documentation for the API.
