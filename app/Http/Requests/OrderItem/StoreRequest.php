@@ -23,10 +23,9 @@ class StoreRequest extends FormRequest
     {
         return [
             'order_items' => 'array|required|min:1',
-            // 'order_items.*.order_id' => 'required|exists:orders,id',
             'order_items.*.product_id' => 'required|exists:products,id',
             'order_items.*.quantity' => 'required|integer',
-            'order_items.*.price' => 'required|numeric',
+            'order_items.*.price' => 'numeric|sometimes',
         ];
     }
 }

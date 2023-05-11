@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index() 
     {
         $orders = Order::with(['orderItems', 'orderItems.product', 'customer', 'shippingInformation'])->orderBy('created_at', 'ASC')->get();
@@ -35,6 +38,10 @@ class OrderController extends Controller
                 ->setStatusCode(Response::HTTP_OK);
     }
 
+    /**
+     * @param \App\Http\Requests\Order\StoreRequest $request
+     * @return \Illuminate\Http\JsonResponse|void
+     */
     public function store(StoreRequest $request) 
     {
         $order = app(OrderComponent::class)->store($request);
@@ -46,8 +53,20 @@ class OrderController extends Controller
                 ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function update(UpdateRequest $request) 
+    /**
+     * @param \App\Http\Requests\Order\UpdateRequest $request
+     * @param \App\Models\Order $order
+     * @return \Illuminate\Http\JsonResponse|void
+     */
+    public function update(UpdateRequest $request, Order $order) 
     {
-        dd($request->all());
+        $order = app(OrderComponent::class)->update($request, $order);
+
+        if($order)
+            return (new OrderResource($order))
+                ->additional(['success' => true, 'message' => 'Order is updated.'])
+                ->response()
+                ->setStatusCode(Response::HTTP_ACCEPTED);
+
     }
 }

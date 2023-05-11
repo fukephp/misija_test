@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Order;
 
+use App\Http\Requests\ContactInformation\StoreRequest as ContactInformationStoreRequest;
+use App\Http\Requests\OrderItem\StoreRequest as OrderItemStoreRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -21,8 +23,15 @@ class UpdateRequest extends FormRequest
      */
     public static function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'customer_id' => 'required|exists:customers,id',
+            'payment_status' => 'integer|required|between:0,3',
         ];
+
+        $rules = array_replace_recursive($rules, ContactInformationStoreRequest::rules());
+
+        $rules = array_replace_recursive($rules, OrderItemStoreRequest::rules());
+
+        return $rules;
     }
 }
