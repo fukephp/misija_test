@@ -12,16 +12,10 @@ class Order extends Model
 
     protected $fillable = [
         'payment_status',
+        'customer_id'
     ];
 
     protected $table = 'orders';
-
-    public const PAYMENT_STATUS = [
-        0 => 'PENDING',
-        1 => 'PAID',
-        2 => 'NOT PAID',
-        3 => 'RETURN',
-    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

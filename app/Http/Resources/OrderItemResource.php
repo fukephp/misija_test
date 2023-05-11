@@ -18,6 +18,7 @@ class OrderItemResource extends JsonResource
             'id' => $this->id,
             'product_id' => $this->product_id,
             'order_id' => $this->order_id,
+            'product' => ProductResource::make($this->whenLoaded('product')),
             'order' => OrderResource::make($this->whenLoaded('order')),
             'quantity' => $this->quantity,
             'price' => $this->price,

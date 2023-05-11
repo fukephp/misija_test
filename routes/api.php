@@ -27,5 +27,7 @@ Route::controller(ProductController::class)->group(function() {
 
 Route::controller(OrderController::class)->group(function() {
     Route::get('/orders', 'index');
-    Route::get('/orders/{product}', 'show');
+    Route::get('/orders/{order}', 'show');
+    Route::post('/orders', 'store');
+    Route::put('/orders/{order}', 'update');
 });
