@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,4 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::controller(ProductController::class)->group(function() {
     Route::get('/products', 'index');
     Route::get('/products/{product}', 'show');
+});
+
+Route::controller(OrderController::class)->group(function() {
+    Route::get('/orders', 'index');
+    Route::get('/orders/{product}', 'show');
 });

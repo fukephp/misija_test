@@ -18,6 +18,7 @@ class OrderResource extends JsonResource
             'payment_status' => $this->payment_status,
             'shipping_information' => ContactInformationResource::make($this->whenLoaded('shippingInformation')),
             'customer' => CustomerResource::make($this->whenLoaded('customer')),
+            'order_items' => OrderItemResource::collection($this->whenLoaded('orderItems')),
         ];
     }
 }

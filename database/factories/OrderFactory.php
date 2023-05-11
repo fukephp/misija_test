@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ContactInformation;
+use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,6 +20,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
+            'customer_id' => Customer::factory(),
             'payment_status' => rand(0, 3)
         ];
     }
