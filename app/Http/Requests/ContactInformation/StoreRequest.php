@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Order;
+namespace App\Http\Requests\ContactInformation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,12 @@ class UpdateRequest extends FormRequest
     public static function rules(): array
     {
         return [
-            //
+            'shipping_information.name' => 'required',
+            'shipping_information.email' => 'required|email',
+            'shipping_information.address' => 'required',
+            'shipping_information.country' => 'required',
+            'shipping_information.zip' => 'required',
+            'shipping_information.city' => 'required',
         ];
     }
 }

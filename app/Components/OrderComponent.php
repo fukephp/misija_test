@@ -3,33 +3,30 @@
 namespace App\Components;
 
 use App\Http\Requests\Order\StoreRequest;
-use App\Models\Customer;
 use App\Models\Order;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class OrderComponent extends BaseComponent
 {
+    /**
+     * @param \App\Http\Requests\Order\StoreRequest $request
+     * @return \App\Models\Order $order
+     */
     public function store(StoreRequest $request) 
     {
-        $customer = Customer::find(1);
+        $orderData = $request->only(['payment_status', 'customer_id']);
+        $data = $request->only(['shipping_information', 'order_items']);
 
-        $data = $request->only(['shippingInformation', 'orderItems']);
-
-        $order = Order::create([
-            'customer_id' => $customer->id
-        ]);
+        $order = Order::create($orderData);
 
         // Shipping information
-        $shippingInformation = $order->shippingInformation()->create($data['shippingInformation']);
+        $order->shippingInformation()->create($data['shipping_information']);
 
         // Order items
+        foreach($data['order_items'] as $orderItemData) 
+        {
+            $order->orderItems()->create($orderItemData);
+        }
 
-        // foreach($data['orderItems'] as $orderItemData) 
-        // {
-
-        // }
-
-        return $order;
+        return $order->load(['orderItems', 'orderItems.product', 'customer', 'shippingInformation']);
     }
 }
