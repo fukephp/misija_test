@@ -5,6 +5,7 @@ namespace App\Components;
 use App\Http\Requests\Order\StoreRequest;
 use App\Http\Requests\Order\UpdateRequest;
 use App\Models\Order;
+use App\Models\OrderItem;
 
 class OrderComponent extends BaseComponent
 {
@@ -44,7 +45,12 @@ class OrderComponent extends BaseComponent
         // Order items
         foreach($data['order_items'] as $orderItemData) 
         {
-            $order->orderItems()->update($orderItemData);
+            $orderItem = OrderItem::find($orderItemData['id']);
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id = $orderItemData['product_id'];
+            $orderItem->quantity = $orderItemData['quantity'];
+            $orderItem->price = !isset($orderItemData['price']) ? $orderItem->product->price * $orderItemData['quantity'] : $orderItemData['price'];
+            $orderItem->save();
         }
 
         $order->shippingInformation()->update($data['shipping_information']);
