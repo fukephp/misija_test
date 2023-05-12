@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -38,6 +39,18 @@ class ContactInformationFactory extends Factory
                 'object_id' => $order->id,
                 'object_type' => function (array $attributes) {
                     return Order::find($attributes['object_id'])->getMorphClass();
+                }
+            ];
+        });
+    }
+
+    public function withCustomer(Customer $customer): Factory 
+    {
+        return $this->state(function (array $attributes) use ($customer) {
+            return [
+                'object_id' => $customer->id,
+                'object_type' => function (array $attributes) {
+                    return Customer::find($attributes['object_id'])->getMorphClass();
                 }
             ];
         });

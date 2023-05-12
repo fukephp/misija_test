@@ -19,23 +19,25 @@ class SetupSeeder extends Seeder
     {
         $customers = Customer::factory(10)->create();
 
+        $products = Product::factory(100)->create([
+            'availability' => rand(1, 9999)
+        ]);
+
         foreach($customers as $customer) 
         {
-            $products = Product::factory(rand(5, 20))->create([
-                'availability' => rand(1, 9999)
+            ContactInformation::factory()->withCustomer($customer)->create();
+
+            $orders = Order::factory(rand(10, 20))->create([
+                'customer_id' => $customer->id,
             ]);
 
-            foreach(range(1, rand(10, 25)) as $customerOrder) 
+            foreach($orders as $order) 
             {
-                $order = Order::factory()->create([
-                    'customer_id' => $customer->id,
-                ]);
-
                 // Shipping address for order
                 ContactInformation::factory()->withOrder($order)->create();
                 
                 // Order items
-                foreach($products as $product) 
+                foreach($products->random(rand(2, 10)) as $product) 
                 {
                     $quantity = rand(1, 25);
 
@@ -43,6 +45,7 @@ class SetupSeeder extends Seeder
                         'product_id' => $product->id,
                         'order_id' => $order->id,
                         'quantity' => $quantity,
+                        'price' => $product->price * $quantity
                     ]);
                 }
             }

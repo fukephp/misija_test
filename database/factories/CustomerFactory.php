@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\ContactInformation;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +20,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->unique()->safeEmail()
         ];
     }
 }
