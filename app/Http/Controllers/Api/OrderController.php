@@ -69,4 +69,13 @@ class OrderController extends Controller
                 ->setStatusCode(Response::HTTP_ACCEPTED);
 
     }
+
+    public function destory(Order $order) 
+    {
+        if($order->delete())
+            return response()->json([
+                'success' => true,
+                'message' => 'Movie is deleted'
+            ], Response::HTTP_OK);
+    }
 }
