@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -31,4 +32,8 @@ Route::controller(OrderController::class)->group(function() {
     Route::post('/orders', 'store');
     Route::put('/orders/{order}', 'update');
     Route::delete('/orders/{order}', 'destory');
+});
+
+Route::controller(DashboardController::class)->group(function() {
+    Route::get('/dashboard', 'index');
 });
